@@ -38,7 +38,7 @@ function agent.register(world, config)
     Action = "Reality.EntityCreate",
     Data = require('json').encode(AGENT_CONFIG)
   }).onReply(function (msg)
-    print(msg.Data)
+    print('created agent')
   end)
 end
 
@@ -46,21 +46,31 @@ function agent.listen(fn)
   Handlers.add("Agent.Listen", "ChatMessage", fn)
 end
 
-function agent.message(msg)
+function agent.move(x,y)
+  Send({
+    Target = WORLD, 
+    Action = "Reality.EntityUpdatePosition", 
+    Data = require('json').encode({ Position = {x,y}}) 
+  })
+  print('moved avatar')
+end
+
+function agent.speak(txt)
   Send({
     Target = WORLD,
     Tags = {
       Action = "ChatMessage",
       ['Author-Name'] = AGENT_CONFIG.Metadata.DisplayName
     },
-    Data = msg
+    Data = txt
   })
 end
 
-function agent.schema(schema, callback)
+function agent.schema(name, schema, callback)
   assert(type(schema) == 'table', 'schema MUST be table')
   assert(type(callback) == 'function', 'callback MUST be function') 
-  AGENT_SCHEMA = { Form = schema }
+  
+  AGENT_SCHEMA = { [name] = schema }
   Handlers.add("Agent.Schema", "Schema", {
     [{Action = "Schema"}] = function (msg)
       msg.reply({

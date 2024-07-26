@@ -34,13 +34,13 @@ function api.createAgent( world, config)
   
   return {
     listen = function(fn) 
-      agent.watchChat(fn)
+      agent.listen(fn)
     end,
     move = function (x,y)
       agent.move(x,y)
     end,
-    speak = function (msg, recipient)
-      agent.chat(msg, recipient)
+    speak = function (msg)
+      agent.speak(msg)
       print('posted to chat...')
     end,
     schema = function (schema, callback)
@@ -104,7 +104,7 @@ Agent.onInteraction(function (msg)
 end)
 
 -- on Schema Interaction 
-Agent.schema(schema, function (msg) 
+Agent.schema(name, schema, function (msg) 
   print('User Completed Form')
 end)
 

@@ -17,7 +17,9 @@ function api.createWorld(name)
       print('Chat Loaded!')
     end,
     addAgent = function (agentId, config)
+      print(RealityEntitiesStatic)
       RealityEntitiesStatic[agentId] = agent.config(config)
+      print(RealityEntitiesStatic)
       print('Static Agent Added')
     end,
     printLink = function ()
@@ -31,19 +33,86 @@ function api.createAgent( world, config)
   agent.register(world, config)
   
   return {
-    watchChat = function(fn) 
-      Handlers.add("WatchChat", "ChatMessage", fn)
+    listen = function(fn) 
+      agent.watchChat(fn)
     end,
-    moveAgent = function (x,y)
-
+    move = function (x,y)
+      agent.move(x,y)
     end,
-    sendMessage = function (msg, recipient)
-    
+    speak = function (msg, recipient)
+      agent.chat(msg, recipient)
+      print('posted to chat...')
     end,
-    setSchema = function (schema, callback)
-    
+    schema = function (schema, callback)
+      agent.schema(schema)
+      agent.onSubmit(callback)
+      print('Schema Updated.')
     end
   }
+end
+
+function api.help(model)
+  if model == "world" then
+    print([[
+
+To create a world:
+
+Reality = require('@reality/api')
+
+World = Reality.createWorld('DreamLand')
+
+World.printLink()
+
+-- to add chat
+
+World.addChat()
+
+-- add a static agent
+-- * note you need to create an agent process (see CreateAgent below)
+World.addAgent(agent, config)
+
+    ]])
+  elseif model == "agent" then
+    print([[
+To create an agent:
+
+Reality = require('@reality/api')
+
+-- Register Agent
+Agent = Reality.createAgent('WORLD_ID', {
+  Position = { 0, 0 },
+  Metadata = {
+    DisplayName = "Cool Llama",
+    SkinNumber = 9
+  }
+})
+
+-- Move Agent
+Agent.move(-1,-2)
+
+-- Listen to Chats
+Agent.listen(function (msg) 
+  print('chat: ' .. msg.Data)
+end)
+
+-- Message World
+Agent.message("Hello I am Larry the Cool Llama")
+
+-- on Interaction (default)
+Agent.onInteraction(function (msg) 
+  print('someone clicked me')
+end)
+
+-- on Schema Interaction 
+Agent.schema(schema, function (msg) 
+  print('User Completed Form')
+end)
+
+
+    ]])
+  else
+    print('must enter "world" or "agent"')
+  end
 end
 
 

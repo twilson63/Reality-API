@@ -28,19 +28,20 @@ export function bundle() {
     .concat(`
  print([[
 
-  Congrats! You just installed the @reality/api
+Congrats! You just installed the @reality/api
 
-  To create a world:
+Are you creating an Agent or World?
 
-  Reality = require('@reality/api')
+Reality = require('@reality/api')
 
-  World = Reality.createWorld('DreamLand')
+For instructions for Agent:
 
-  World.printLink()
+Reality.help('agent')
 
-  -- to add chat
+For instructions fro World:
 
-  World.addChat()
+Reality.help('world')
+
 
 ]])
       `)

@@ -43,6 +43,7 @@ return function(name)
       local recipient = msg.Tags['Recipient']
       local content = msg.Data
 
+      print('Broadcasting msg to static avatars')
       Utils.map(function (key)
         print('checking...' .. key)
         if RealityEntitiesStatic[key].Type == "Avatar" then
@@ -58,6 +59,17 @@ return function(name)
       end, 
         Utils.keys(RealityEntitiesStatic)
       )
+      print('Broadcasting msg to dynamic avatars')
+      local avatars = RealityDbAdmin:exec[[select Id from Entities where Type = 'Avatar']]
+      Utils.map(function (o) 
+        Send({
+          Target = o.Id,
+          Action = "ChatMessage",
+          ["Author-Name"] = authorName,
+          ["Recipient"] = recipient,
+          Data = content
+        })
+      end, avatars)
     end
 
   )

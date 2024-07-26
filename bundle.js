@@ -18,12 +18,13 @@ if (os.platform() === 'win32') {
 export function bundle() {
   // let luaFiles = fs.readdirSync(__dirname + "../../process")
   //   .filter(n => /\.lua$/.test(n))
-  let luaFiles = ['DbAdmin.lua', 'Chat.lua', 'World.lua', 'WorldTemplate.lua', 'api.lua']
+  let luaFiles = ['DbAdmin.lua', 'Chat.lua', 'World.lua', 'WorldTemplate.lua', 'Agent.lua']
     .map(name => {
       const code = fs.readFileSync(__dirname + "src/" + name, 'utf-8')
       const mod = name.replace(/\.lua$/, "")
       return template(mod, code)
     })
+
     .concat(`
  print([[
 
@@ -43,6 +44,15 @@ export function bundle() {
 
 ]])
       `)
+    .concat(function () {
+      const code = fs.readFileSync(__dirname + "src/api.lua", 'utf-8')
+      return `
+function load_api() 
+  ${code}
+end
+return load_api()
+        `
+    }())
     .join('\n\n')
 
 

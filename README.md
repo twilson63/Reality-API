@@ -29,6 +29,29 @@ Install the aos package manager
 APM.install('@reality/api')
 ```
 
+### Create your agent
+
+```lua
+Reality = require('@reality/api')
+Agent = Reality.createAgent('G1NGX3QbdIFj0CP612KrsIO-U_NfKTiwj2aX1KYqpNk', {
+  Position = {8,8},
+  Metadata = {
+    DisplayName = "elvis",
+    SkinNumber = "6"
+  }
+})
+-- add functionality...
+Agent.move(9,9)
+Agent.listen(function (msg) 
+  print(msg.Data)
+  if (msg.Data = "@elvis") then
+    Agent.speak('Well, thank you, thank you very much.')
+  end
+end)
+
+```
+
+
 ### Create your construct World
 
 ```lua

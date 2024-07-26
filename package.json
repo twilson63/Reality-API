@@ -1,0 +1,12 @@
+{
+  "name": "Reality-API",
+  "type": "module",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/twilson63/Reality-API.git",
+  "author": "Tom Wilson <tom@hyper.io>",
+  "license": "MIT",
+  "scripts": {
+    "build": "node bundle.js"
+  }
+}

@@ -66,6 +66,24 @@ function agent.speak(txt)
   })
 end
 
+function agent.fix()
+  Send({
+    Target = WORLD,
+    Tags = {
+      Action = "Reality.EntityFix",
+    }
+  })
+end
+
+function agent.hide()
+  Send({
+    Target = WORLD,
+    Tags = {
+      Action = "Reality.EntityHide",
+    }
+  })
+end
+
 function agent.schema(name, schema, callback)
   assert(type(schema) == 'table', 'schema MUST be table')
   assert(type(callback) == 'function', 'callback MUST be function') 

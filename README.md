@@ -49,6 +49,8 @@ Agent.listen(function (msg)
   end
 end)
 
+-- Keep the agent visible when inactive
+Agent.fix()
 ```
 
 

@@ -22,3 +22,9 @@ The two current api domains are `world` and `agent`.
 
 1. Bundle lua - `node bundle.js`
 2. https://apm_betteridea.g8way.io
+
+## Focus
+
+The goal of this api, is to create an intuitive experience for developers to build agents and worlds leveraging the AOS 2 feature set.
+
+In the Reality Protocol developers will be able to use AO to create incredible worlds, agents, doorways and other amazing assets. This api aims at providing a nice context boundary between the logic and the presentation and interaction layers. 
